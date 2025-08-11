@@ -6,17 +6,17 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 22:10:24 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/07 11:41:00 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:30:52 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CAT_HPP
 #define CAT_HPP
 
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "Brain.hpp"
 
-class Cat: virtual public Animal
+class Cat: public AAnimal
 {
   private:
     Brain *brain;

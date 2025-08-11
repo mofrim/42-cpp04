@@ -6,18 +6,18 @@
 #    By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/01 11:45:58 by fmaurer           #+#    #+#              #
-#    Updated: 2025/08/07 09:10:13 by fmaurer          ###   ########.fr        #
+#    Updated: 2025/08/11 16:27:24 by fmaurer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Simple skeleton Makefile
 
-NAME 		= animal1
+NAME 		= animal2
 
 VPATH 	= .
 
-SRC			= main.cpp Animal.cpp utils.cpp Dog.cpp Cat.cpp Brain.cpp
-HDR			= Animal.hpp utils.hpp Dog.hpp Cat.hpp Brain.hpp
+SRC			= main.cpp AAnimal.cpp utils.cpp Dog.cpp Cat.cpp Brain.cpp
+HDR			= AAnimal.hpp utils.hpp Dog.hpp Cat.hpp Brain.hpp
 OBJDIR	= obj
 OBJS		= $(patsubst %.cpp,$(OBJDIR)/%.o,$(SRC))
 CFLAGS	= -Wall -Werror -Wextra -std=c++98

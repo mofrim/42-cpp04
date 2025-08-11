@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*   AAnimal.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 21:42:14 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/07 11:41:28 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:35:14 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@
 
 // in later c++ standards there is std::optional which would have been the
 // appropriate thing to use here.
-class Animal
+class AAnimal
 {
   private:
-    Brain *brain;
+    Brain *_brain;
 
   protected:
-    std::string type;
+    std::string _type;
 
   public:
-    Animal();
-    Animal(const Animal& other);
-    Animal& operator=(const Animal& other);
-    virtual ~Animal();
+    AAnimal();
+    AAnimal(const AAnimal& other);
+    AAnimal& operator=(const AAnimal& other);
+    virtual ~AAnimal();
 
     void         setType(const std::string& newType);
     std::string  getType() const;

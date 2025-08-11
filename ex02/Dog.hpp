@@ -6,17 +6,17 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 22:10:24 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/07 11:43:03 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:30:47 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOG_HPP
 #define DOG_HPP
 
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "Brain.hpp"
 
-class Dog: virtual public Animal
+class Dog: public AAnimal
 {
   private:
     Brain *brain;

@@ -1,6 +1,6 @@
 /* ************************************************************************** */ /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.cpp                                         :+:      :+:    :+:   */
+/*   AAnimal.cpp                                         :+:      :+:    :+: */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -8,19 +8,17 @@
 /*   Updated: 2025/08/06 20:48:47 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "utils.hpp"
 
-#include <iostream>
-
-Animal::Animal(): brain(NULL), type("Animal")
+AAnimal::AAnimal(): _brain(NULL), _type("AAnimal")
 {
-  dbg_msg("Animal", "Default Constructor called");
+  dbg_msg("AAnimal", "Default Constructor called");
 }
 
-Animal::Animal(const Animal& other): type(other.type)
+AAnimal::AAnimal(const AAnimal& other): _type(other._type)
 {
-  dbg_msg("Animal", "Copy Constructor called");
+  dbg_msg("AAnimal", "Copy Constructor called");
   // if (other.brain != NULL)
   // {
   //   if (this->brain != NULL)
@@ -30,10 +28,10 @@ Animal::Animal(const Animal& other): type(other.type)
   // }
 }
 
-Animal& Animal::operator=(const Animal& other)
+AAnimal& AAnimal::operator=(const AAnimal& other)
 {
-  dbg_msg("Animal", "Copy-Assignment Constructor called");
-  this->type = other.type;
+  dbg_msg("AAnimal", "Copy-Assignment Constructor called");
+  this->_type = other._type;
   // if (other.brain != NULL)
   // {
   //   if (this->brain != NULL)
@@ -44,22 +42,23 @@ Animal& Animal::operator=(const Animal& other)
   return (*this);
 }
 
-Animal::~Animal()
+AAnimal::~AAnimal()
 {
-  dbg_msg("Animal", "Destructor called.");
+  dbg_msg("AAnimal", "Destructor called.");
   // if (this->brain != NULL)
   //   delete this->brain;
 }
 
-std::string Animal::getType() const { return (this->type); }
+std::string AAnimal::getType() const { return (this->_type); }
 
-void Animal::setType(const std::string& newType) { this->type = newType; }
+void AAnimal::setType(const std::string& newType) { this->_type = newType; }
 
-// void Animal::makeSound() const
+// void AAnimal::makeSound() const
 // {
 //   std::cout << "(" << this->type << ") " << "..." << std::endl;
 // }
 //
-// void Animal::newIdea(const std::string& idea) { this->brain->addIdea(idea); }
+// void AAnimal::newIdea(const std::string& idea) { this->brain->addIdea(idea);
+// }
 //
-// void Animal::showIdeas() { this->brain->printIdeas(); };
+// void AAnimal::showIdeas() { this->brain->printIdeas(); };

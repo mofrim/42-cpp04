@@ -6,11 +6,11 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 21:41:39 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/07 14:39:54 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:36:09 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
 #include "utils.hpp"
@@ -19,17 +19,17 @@
 
 int main()
 {
-  const int NumOfAnimals = 6;
-  Animal   *dogsncats[NumOfAnimals];
-  for (int i = 0; i < NumOfAnimals; i++)
+  const int NumOfAAnimals = 6;
+  AAnimal  *dogsncats[NumOfAAnimals];
+  for (int i = 0; i < NumOfAAnimals; i++)
   {
-    if (i < NumOfAnimals / 2)
+    if (i < NumOfAAnimals / 2)
       dogsncats[i] = new Dog();
     else
       dogsncats[i] = new Cat();
   }
 
-  for (int i = 0; i < NumOfAnimals; i++)
+  for (int i = 0; i < NumOfAAnimals; i++)
   {
     std::ostringstream num;
     num << i;
@@ -39,7 +39,7 @@ int main()
 
   newline();
 
-  for (int i = 0; i < NumOfAnimals; i++)
+  for (int i = 0; i < NumOfAAnimals; i++)
   {
     dogsncats[i]->makeSound();
     dogsncats[i]->showIdeas();
@@ -47,7 +47,7 @@ int main()
 
   newline();
 
-  for (int i = 0; i < NumOfAnimals; i++)
+  for (int i = 0; i < NumOfAAnimals; i++)
     delete dogsncats[i];
 
   newline();
