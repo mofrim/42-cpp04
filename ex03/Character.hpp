@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:15:10 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 15:10:49 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 15:51:52 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 class Character: public ICharacter
 {
   private:
-    std::string name;
-    int         inv_idx;
-    AMateria   *inv[4];
+    std::string _name;
+    int         _inv_idx;
+    AMateria   *_inv[4];
 
-    AMateria **gc;
-    size_t     gc_idx;
+    AMateria **_gc;
+    size_t     _gc_idx;
 
     void       _addGarbage(AMateria *g);
     void       _collectGarbage();

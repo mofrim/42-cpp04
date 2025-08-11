@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 09:39:21 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 15:43:11 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:10:26 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void Tests::copyConstructorTest() const
     kalle.use(0, kalle);
     kalle.use(1, kalle);
     delete bob1;
+    Character foo = Character("foo");
   }
   this->_printTestEndBanner("copyConstructorTest");
 }

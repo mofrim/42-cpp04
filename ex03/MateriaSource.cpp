@@ -22,7 +22,8 @@ MateriaSource::MateriaSource(): IMateriaSource(), idx(0), gc_idx(0)
     this->materias[i] = NULL;
 }
 
-MateriaSource::MateriaSource(const MateriaSource& other): IMateriaSource(other)
+MateriaSource::MateriaSource(const MateriaSource& other):
+  IMateriaSource(other), idx(other.idx)
 {
   dbg_msg("MateriaSource", "Copy Constructor called.");
   for (size_t i = 0; i < 4; i++)
@@ -30,10 +31,6 @@ MateriaSource::MateriaSource(const MateriaSource& other): IMateriaSource(other)
     delete this->materias[i];
     this->materias[i] = other.materias[i]->clone();
   }
-  this->idx = other.idx;
-  //
-  // delete and copy gc from other
-  this->_collectGarbage();
   this->gc     = this->_copyGC(other.gc, other.gc_idx);
   this->gc_idx = other.gc_idx;
 }
@@ -123,7 +120,11 @@ AMateria *MateriaSource::createMateria(std::string const& type)
   for (size_t i = 0; i < 4; i++)
   {
     if (this->materias[i] && this->materias[i]->getType() == type)
-      return (this->materias[i]->clone());
+    {
+      AMateria *cloned = this->materias[i]->clone();
+      cloned->unOwn();
+      return (cloned);
+    }
   }
   return (NULL);
 }
@@ -160,12 +161,12 @@ void MateriaSource::_addGarbage(AMateria *g)
   AMateria **new_gc = new AMateria *[gc_idx + 1];
   size_t     i;
 
-  for (i = 0; i < gc_idx; i++)
+  for (i = 0; i < this->gc_idx; i++)
     new_gc[i] = this->gc[i];
   new_gc[i] = g;
 
-  this->_collectGarbage();
-
+  if (this->gc)
+    delete[] this->gc;
   this->gc = new_gc;
   this->gc_idx++;
 }

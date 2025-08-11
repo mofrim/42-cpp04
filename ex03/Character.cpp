@@ -6,84 +6,81 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 06:59:33 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 15:42:21 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:08:58 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
 #include "utils.hpp"
 
-Character::Character(): ICharacter(), name("noname"), inv_idx(0), gc_idx(0)
+Character::Character(): ICharacter(), _name("noname"), _inv_idx(0), _gc_idx(0)
 {
-  dbg_msg("Character " + this->name, "Default Constructor called.");
-  this->gc = NULL;
+  dbg_msg("Character " + this->_name, "Default Constructor called.");
+  this->_gc = NULL;
   for (size_t i = 0; i < 4; i++)
-    this->inv[i] = NULL;
+    this->_inv[i] = NULL;
 }
 
 Character::Character(const Character& other):
-  ICharacter(other), inv_idx(other.inv_idx)
+  ICharacter(other), _name(other._name), _inv_idx(other._inv_idx)
 {
-  dbg_msg("Character " + this->name, "Copy Constructor called.");
-  this->name = other.name;
+  dbg_msg("Character " + this->_name, "Copy Constructor called.");
   for (size_t i = 0; i < 4; i++)
   {
-    if (other.inv[i])
-      this->inv[i] = other.inv[i]->clone();
+    if (other._inv[i])
+      this->_inv[i] = other._inv[i]->clone();
     else
-      this->inv[i] = other.inv[i];
+      this->_inv[i] = other._inv[i];
   }
 
-  // delete and copy gc from other
-  this->_collectGarbage();
-  this->gc     = this->_copyGC(other.gc, other.gc_idx);
-  this->gc_idx = other.gc_idx;
+  this->_gc     = this->_copyGC(other._gc, other._gc_idx);
+  this->_gc_idx = other._gc_idx;
 }
 
 Character& Character::operator=(const Character& other)
 {
-  dbg_msg("Character " + this->name, "Copy-Assignment Constructor called.");
-  this->name    = other.name;
-  this->inv_idx = other.inv_idx;
+  dbg_msg("Character " + this->_name, "Copy-Assignment Constructor called.");
+  this->_name    = other._name;
+  this->_inv_idx = other._inv_idx;
   for (size_t i = 0; i < 4; i++)
   {
-    delete this->inv[i];
-    if (other.inv[i])
-      this->inv[i] = other.inv[i]->clone();
+    delete this->_inv[i];
+    if (other._inv[i])
+      this->_inv[i] = other._inv[i]->clone();
     else
-      this->inv[i] = NULL;
+      this->_inv[i] = NULL;
   }
 
   // delete and copy gc from other
   this->_collectGarbage();
-  this->gc     = this->_copyGC(other.gc, other.gc_idx);
-  this->gc_idx = other.gc_idx;
+  this->_gc     = this->_copyGC(other._gc, other._gc_idx);
+  this->_gc_idx = other._gc_idx;
 
   return (*this);
 }
 
 Character::~Character()
 {
-  dbg_msg("Character " + this->name, "Destructor called.");
+  dbg_msg("Character " + this->_name, "Destructor called.");
   for (size_t i = 0; i < 4; i++)
-    if (this->inv[i])
+    if (this->_inv[i])
     {
-      delete this->inv[i];
-      this->inv[i] = NULL;
+      delete this->_inv[i];
+      this->_inv[i] = NULL;
     }
   this->_collectGarbage();
 }
 
 Character::Character(const std::string& cname):
-  ICharacter(), name(cname), inv_idx(0), gc_idx(0)
+  ICharacter(), _name(cname), _inv_idx(0), _gc_idx(0)
 {
-  dbg_msg("Character " + this->name, "Default-Name Constructor called.");
-  this->gc = NULL;
+  dbg_msg("Character " + this->_name, "Default-Name Constructor called.");
+  this->_gc = NULL;
   for (size_t i = 0; i < 4; i++)
-    this->inv[i] = NULL;
+    this->_inv[i] = NULL;
 }
 
-std::string const& Character::getName() const { return (this->name); }
+std::string const& Character::getName() const { return (this->_name); }
 
 // again the leakiness... either we clone the Materias to our inventory: the
 // address is lost if it not kept in the outer scope. or we simply store the
@@ -107,45 +104,49 @@ std::string const& Character::getName() const { return (this->name); }
 // The version running smoother with the example code:
 void Character::equip(AMateria *m)
 {
-  if (this->inv_idx == 4)
+  if (m->isOwned())
+    return;
+  if (this->_inv_idx == 4)
   {
     for (size_t i = 0; i < 4; i++)
-      if (this->inv[i] == NULL)
+      if (this->_inv[i] == NULL)
       {
-        this->inv[i] = m;
+        this->_inv[i] = m;
+        m->own();
         return;
       }
     this->_addGarbage(m);
     return;
   }
-  this->inv[inv_idx] = m;
-  this->inv_idx++;
+  this->_inv[_inv_idx] = m;
+  m->own();
+  this->_inv_idx++;
 }
 
 void Character::unequip(int idx)
 {
-  if (0 <= idx && idx <= 3 && this->inv[idx] != NULL)
+  if (0 <= idx && idx <= 3 && this->_inv[idx] != NULL)
   {
-    this->_addGarbage(this->inv[idx]);
-    this->inv[idx] = NULL;
+    this->_addGarbage(this->_inv[idx]);
+    this->_inv[idx] = NULL;
   }
 }
 
 void Character::use(int idx, ICharacter& target)
 {
-  if (0 <= idx && idx <= 3 && this->inv[idx] != NULL)
-    this->inv[idx]->use(target);
+  if (0 <= idx && idx <= 3 && this->_inv[idx] != NULL)
+    this->_inv[idx]->use(target);
 }
 
 // delete all garbage
 void Character::_collectGarbage()
 {
-  if (this->gc)
+  if (this->_gc)
   {
-    for (size_t i = 0; i < this->gc_idx; i++)
-      delete this->gc[i];
-    delete[] this->gc;
-    this->gc = NULL;
+    for (size_t i = 0; i < this->_gc_idx; i++)
+      delete this->_gc[i];
+    delete[] this->_gc;
+    this->_gc = NULL;
   }
 }
 
@@ -166,15 +167,15 @@ AMateria **Character::_copyGC(AMateria **other_gc, size_t other_gcidx)
 // vector.
 void Character::_addGarbage(AMateria *g)
 {
-  AMateria **new_gc = new AMateria *[this->gc_idx + 1];
+  AMateria **new_gc = new AMateria *[this->_gc_idx + 1];
   size_t     i;
 
-  for (i = 0; i < this->gc_idx; i++)
-    new_gc[i] = this->gc[i];
+  for (i = 0; i < this->_gc_idx; i++)
+    new_gc[i] = this->_gc[i];
   new_gc[i] = g;
 
-  if (this->gc)
-    delete[] this->gc;
-  this->gc = new_gc;
-  this->gc_idx++;
+  if (this->_gc)
+    delete[] this->_gc;
+  this->_gc = new_gc;
+  this->_gc_idx++;
 }

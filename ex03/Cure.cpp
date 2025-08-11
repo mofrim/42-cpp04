@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 21:48:17 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 14:42:18 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:04:53 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 Cure::Cure(): AMateria()
 {
-  this->type = "cure";
+  this->_type = "cure";
   dbg_msg("Cure", "Default Construtor called.");
 }
 

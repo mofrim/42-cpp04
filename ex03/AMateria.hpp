@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:08:48 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 14:45:09 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 15:59:40 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 
 class ICharacter;
 
+// my slightly modified version in order to maximize memmgmt cleanliness
 class AMateria
 {
   private:
     bool _isOwned;
 
   protected:
-    std::string type;
+    std::string _type;
 
   public:
-    // OCF
     AMateria();
     AMateria(const AMateria& other);
     AMateria& operator=(const AMateria& other);
@@ -36,6 +36,7 @@ class AMateria
     virtual AMateria  *clone() const = 0;
     virtual void       use(ICharacter& target);
     void               own();
+    void               unOwn();
     bool               isOwned();
 };
 

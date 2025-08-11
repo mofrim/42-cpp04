@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 21:48:17 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 14:51:50 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:04:43 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@
 
 Ice::Ice(): AMateria()
 {
-  this->type = "ice";
+  this->_type = "ice";
   dbg_msg("Ice", "Default Construtor called.");
 }
 
 Ice::Ice(const Ice& other): AMateria(other)
 {
-  this->type = other.type;
+  this->_type = other._type;
   dbg_msg("Ice", "Copy Construtor called.");
 }
 
 Ice& Ice::operator=(const Ice& other)
 {
-  this->type = other.type;
+  this->_type = other._type;
   dbg_msg("Ice", "Copy-Assignment Construtor called.");
   return (*this);
 }

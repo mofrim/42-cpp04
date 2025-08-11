@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:05:07 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 15:24:38 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:01:45 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 #include "Ice.hpp"
 #include "MateriaSource.hpp"
 #include "Tests.hpp"
-#include "utils.hpp"
-
-#include <iostream>
 
 // due to the snippet from subject.pdf i drew the conclusion that ther mandatory
 // path for dealing with Materias is through MateriaSource. A MateriaSource
@@ -51,12 +48,12 @@
 //
 // Rule:
 //
-//    ** the only that can be deleted are unused (unlearned, unequipped)
-//    Materias, Characters and MateriaSources **
+//    ** the only things that can be deleted in main are unused (unlearned,
+//    unequipped) Materias, Characters and MateriaSources **
+//
+// that's it for now.
 int main()
 {
-  Tests test;
-
   //// snippet from subject.pdf ////
 
   IMateriaSource *src = new MateriaSource();
@@ -76,13 +73,17 @@ int main()
   delete me;
   delete src;
 
+  //////// my own tests /////////
+
+  Tests test;
+
   //// copy constructor example ////
-  // test.copyConstructorTest();
+  test.copyConstructorTest();
 
   //// clean mem mgmt ////
-  // test.cleanMemMgmtMateria0();
-  // test.cleanMemMgmtMateria1();
-  // test.cleanMemMgmtMateria2();
+  test.cleanMemMgmtMateria0();
+  test.cleanMemMgmtMateria1();
+  test.cleanMemMgmtMateria2();
 
   //// character inv test ////
   test.characterInvMemTest();
