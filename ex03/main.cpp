@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:05:07 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 11:39:32 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 15:24:38 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,41 @@
 
 #include <iostream>
 
+// due to the snippet from subject.pdf i drew the conclusion that ther mandatory
+// path for dealing with Materias is through MateriaSource. A MateriaSource
+// _takes ownership_ of the Materias it learns. Meaning: stuff like this
+//
+//    IMateriaSource *srcA = new MateriaSource();
+//    IMateriaSource *srcB = new MateriaSource();
+//    AMateria       *c    = new Cure();
+//    srcA->learnMateria(c);
+//    srcB->learnMateria(c);
+//    delete c;
+//    delete srcA;
+//    delete srcB;
+//
+// is not allowed (but it is possible to write and therefore will lead to a
+// segfault). So the rule is:
+//
+//    ** Any Materia that is passed to a MateriaSource should not be deleted in
+//    the outer scope !!!**
+//
+// It can be passed to another MateriaSource, but without any effect. The
+// Materia is _owned_ by ther first MateriaSource that learns it.
+// I modified AMateria for this. i hope you do not mind.
+//
+// The same holds for Characters. They also take ownership *and* responsibility
+// for what they get equipped with. Meaning: if some Materia was created and
+// equipped to a Character _never_ delete it!
+//
+// Rule:
+//
+//    ** the only that can be deleted are unused (unlearned, unequipped)
+//    Materias, Characters and MateriaSources **
 int main()
 {
   Tests test;
+
   //// snippet from subject.pdf ////
 
   IMateriaSource *src = new MateriaSource();
@@ -47,57 +79,16 @@ int main()
   //// copy constructor example ////
   // test.copyConstructorTest();
 
-  //// crash example no1 ////
+  //// clean mem mgmt ////
+  // test.cleanMemMgmtMateria0();
+  // test.cleanMemMgmtMateria1();
+  // test.cleanMemMgmtMateria2();
 
-  test.cleanMemMgmt();
+  //// character inv test ////
+  test.characterInvMemTest();
 
   //// no stack for Materias! ////
   // test.noStack();
-
-  //// extra ////
-
-  // newline();
-  //
-  // IMateriaSource *src1 = new MateriaSource();
-  //
-  // newline();
-  //
-  // AMateria *at = new Cure();
-  //
-  // newline();
-  //
-  // src1->learnMateria(at);
-  //
-  // newline();
-  //
-  // delete at;
-  //
-  // newline();
-  //
-  // delete src1;
-
-  // IMateriaSource *srcX = new MateriaSource();
-  // srcX->learnMateria(new Ice());
-  // srcX->learnMateria(new Cure());
-  // ICharacter *meX  = new Character("meX");
-  // ICharacter *bobX = new Character("bobX");
-  // AMateria   *tmpX;
-  // tmpX = srcX->createMateria("ice");
-  // meX->equip(tmpX);
-  // tmpX = srcX->createMateria("cure");
-  // meX->equip(tmpX);
-  // meX->equip(tmpX);
-  // meX->equip(tmpX);
-  // meX->use(0, *bobX);
-  // meX->use(1, *bobX);
-  // meX->use(2, *bobX);
-  // meX->use(3, *bobX);
-  //
-  // *meX = *bobX;
-  //
-  // delete bobX;
-  // delete meX;
-  // delete srcX;
 
   return (0);
 }

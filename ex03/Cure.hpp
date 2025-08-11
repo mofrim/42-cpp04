@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 21:47:28 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 09:34:19 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 14:42:37 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ class Cure: virtual public AMateria
   private:
     Cure(const Cure& other);
     Cure& operator=(const Cure& other);
+    ~Cure();
 
   public:
     Cure();
-    ~Cure();
     AMateria *clone() const;
     void      use(ICharacter& target);
 };

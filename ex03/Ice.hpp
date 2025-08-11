@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 21:47:28 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 09:33:45 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 14:52:04 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 //      foo.equip(c);
 //    }
 //    foo.use(0, bar);
+//
 class Ice: virtual public AMateria
 {
   private:

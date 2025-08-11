@@ -28,13 +28,12 @@ MateriaSource::MateriaSource(const MateriaSource& other): IMateriaSource(other)
   for (size_t i = 0; i < 4; i++)
   {
     delete this->materias[i];
-    this->materias[i] = other.materias[i];
+    this->materias[i] = other.materias[i]->clone();
   }
   this->idx = other.idx;
-
-  // handle garbage collector
-  if (this->gc)
-    delete[] this->gc;
+  //
+  // delete and copy gc from other
+  this->_collectGarbage();
   this->gc     = this->_copyGC(other.gc, other.gc_idx);
   this->gc_idx = other.gc_idx;
 }
@@ -49,9 +48,8 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other)
   }
   this->idx = other.idx;
 
-  // handle garbage collector
-  if (this->gc)
-    delete[] this->gc;
+  // delete and copy gc from other
+  this->_collectGarbage();
   this->gc     = this->_copyGC(other.gc, other.gc_idx);
   this->gc_idx = other.gc_idx;
   return (*this);
@@ -103,15 +101,20 @@ MateriaSource::~MateriaSource()
 //    delete srcA; // BOOOM! AGAIN! Segault
 //    delete srcB;
 //
+// SOLUTION: introduce ownership.
 void MateriaSource::learnMateria(AMateria *m)
 {
 
+  if (m->isOwned())
+    return;
   if (this->idx == 4)
   {
     this->_addGarbage(m);
+    m->own();
     return;
   }
   this->materias[this->idx] = m;
+  m->own();
   this->idx++;
 }
 
@@ -129,7 +132,12 @@ AMateria *MateriaSource::createMateria(std::string const& type)
 void MateriaSource::_collectGarbage()
 {
   if (this->gc)
-    delete[] gc;
+  {
+    for (size_t i = 0; i < this->gc_idx; i++)
+      delete this->gc[i];
+    delete[] this->gc;
+    this->gc = NULL;
+  }
 }
 
 // copy the other gc by cloneing every gc entry. through this the other gc will
@@ -145,17 +153,18 @@ AMateria **MateriaSource::_copyGC(AMateria **other_gc, size_t other_gcidx)
   return (gc_copy);
 }
 
+// add a new AMateria pointer to the end of GC array. would have been nicer with
+// vector.
 void MateriaSource::_addGarbage(AMateria *g)
 {
   AMateria **new_gc = new AMateria *[gc_idx + 1];
-  size_t     i      = 0;
+  size_t     i;
 
-  for (; i < gc_idx; i++)
-    new_gc[i] = this->gc[i]->clone();
-  new_gc[i] = g->clone();
+  for (i = 0; i < gc_idx; i++)
+    new_gc[i] = this->gc[i];
+  new_gc[i] = g;
 
-  if (this->gc)
-    delete[] this->gc;
+  this->_collectGarbage();
 
   this->gc = new_gc;
   this->gc_idx++;

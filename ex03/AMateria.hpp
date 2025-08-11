@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:08:48 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/10 17:50:24 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 14:45:09 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ class ICharacter;
 
 class AMateria
 {
+  private:
+    bool _isOwned;
+
   protected:
     std::string type;
 
@@ -32,6 +35,8 @@ class AMateria
     std::string const& getType() const;
     virtual AMateria  *clone() const = 0;
     virtual void       use(ICharacter& target);
+    void               own();
+    bool               isOwned();
 };
 
 #endif
