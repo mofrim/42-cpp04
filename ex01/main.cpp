@@ -6,11 +6,9 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 21:41:39 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/07 15:02:49 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:25:54 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// FIXME: downgrade this exercise to not using abstract class
 
 #include "Animal.hpp"
 #include "Cat.hpp"
@@ -23,6 +21,7 @@ int main()
 {
   const int NumOfAnimals = 6;
   Animal   *dogsncats[NumOfAnimals];
+
   for (int i = 0; i < NumOfAnimals; i++)
   {
     if (i < NumOfAnimals / 2)

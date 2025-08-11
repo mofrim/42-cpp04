@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 22:10:24 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/07 11:43:03 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:22:59 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "Animal.hpp"
 #include "Brain.hpp"
 
-class Dog: virtual public Animal
+class Dog: public Animal
 {
   private:
     Brain *brain;

@@ -22,9 +22,4 @@ void dbg_msg(const std::string& name, const std::string& msg)
     std::cout << "[" << name << "] " << msg << std::endl;
 }
 
-std::string get_prefix(const std::string& type, const std::string& name)
-{
-  return ("  " + type + "(" + name + ") ");
-}
-
 void newline() { std::cout << std::endl; }

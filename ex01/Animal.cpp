@@ -11,8 +11,6 @@
 #include "Animal.hpp"
 #include "utils.hpp"
 
-#include <iostream>
-
 Animal::Animal(): brain(NULL), type("Animal")
 {
   dbg_msg("Animal", "Default Constructor called");
