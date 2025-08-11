@@ -34,7 +34,7 @@ class MateriaSource: virtual public IMateriaSource
     MateriaSource();
     MateriaSource(const MateriaSource& other);
     MateriaSource& operator=(const MateriaSource& other);
-    virtual ~MateriaSource();
+    ~MateriaSource();
 
     void      learnMateria(AMateria *m);
     AMateria *createMateria(std::string const& type);

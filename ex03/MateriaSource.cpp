@@ -27,10 +27,7 @@ MateriaSource::MateriaSource(const MateriaSource& other):
 {
   dbg_msg("MateriaSource", "Copy Constructor called.");
   for (size_t i = 0; i < 4; i++)
-  {
-    delete this->materias[i];
     this->materias[i] = other.materias[i]->clone();
-  }
   this->gc     = this->_copyGC(other.gc, other.gc_idx);
   this->gc_idx = other.gc_idx;
 }
@@ -40,7 +37,8 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other)
   dbg_msg("MateriaSource", "Copy-Assignment Constructor called.");
   for (size_t i = 0; i < 4; i++)
   {
-    delete this->materias[i];
+    if (this->materias[i])
+      delete this->materias[i];
     this->materias[i] = other.materias[i];
   }
   this->idx = other.idx;

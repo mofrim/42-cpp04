@@ -6,7 +6,7 @@
 /*   By: fmaurer <fmaurer42@posteo.de>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 06:59:33 by fmaurer           #+#    #+#             */
-/*   Updated: 2025/08/11 16:08:58 by fmaurer          ###   ########.fr       */
+/*   Updated: 2025/08/11 16:14:07 by fmaurer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ Character& Character::operator=(const Character& other)
   this->_inv_idx = other._inv_idx;
   for (size_t i = 0; i < 4; i++)
   {
-    delete this->_inv[i];
+    if (this->_inv[i])
+      delete this->_inv[i];
     if (other._inv[i])
       this->_inv[i] = other._inv[i]->clone();
     else
